@@ -1,0 +1,16 @@
+name: InfiniteChests
+main: net.core.cgs.Core
+version: 1.0
+author: Fictitious_Rotor
+
+commands:
+  bindinfiniteitem:
+    description: Allows the player to convert a standard chest into an infinite chest
+    usage: "Hold an item, point at a chest and run /bindinfiniteitem to make the chest produce an infinite supply"
+    permission: CGS.Core.bindinfiniteitem
+    permission-message: You don't have <permission>
+  unbindinfinite:
+    description: Allows the player to convert an infinite chest into a standard chest
+    usage: Point at a chest, run /unbindinfinite
+    permission: CGS.Core.unbindinfinite
+    permission-message: You don't have <permission>
