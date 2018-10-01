@@ -24,7 +24,7 @@
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>2.3.1</version>
                 <configuration>
-                    <outputDirectory>D:\Program Files\Minecraft\MinecraftHub\CGS\Backups\2018-09-23\plugins</outputDirectory>
+                    <outputDirectory>D:\Program Files\Minecraft\MinecraftHub\CGS\Backups\Latest (For plugin dev)\plugins</outputDirectory>
                 </configuration>
             </plugin>
         </plugins>

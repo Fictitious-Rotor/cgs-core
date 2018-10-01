@@ -4,11 +4,12 @@ import net.core.cgs.Core;
 import net.core.cgs.metadata.MetadataPretender;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.data.BlockData;
 
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class InfiniteChestsMetadata extends MetadataPretender<Block, Material, String, Material> {
+public class InfiniteChestsMetadata extends MetadataPretender<Block, BlockData, String, BlockData> {
     public InfiniteChestsMetadata(Core instance) {
         super(instance);
     }
@@ -26,12 +27,12 @@ public class InfiniteChestsMetadata extends MetadataPretender<Block, Material, S
     }
 
     @Override
-    protected Material reduceComplexValueToSimpleValue(Material givenMaterial) {
-        return givenMaterial;
+    protected BlockData reduceComplexValueToSimpleValue(BlockData givenBlockData) {
+        return givenBlockData;
     }
 
     @Override
-    protected Material expandSimpleValueToComplexValue(Material givenValue) {
+    protected BlockData expandSimpleValueToComplexValue(BlockData givenValue) {
         return givenValue;
     }
 
@@ -41,8 +42,11 @@ public class InfiniteChestsMetadata extends MetadataPretender<Block, Material, S
     }
 
     @Override
-    protected String convertSimpleValueToString(Material givenValue) {
-        return givenValue.name();
+    protected String convertSimpleValueToString(BlockData givenValue) {
+        plugin.getLogger().info("LOOK AT ME! I AM THE TOSTRING OF THE BLOCKDATA! " + givenValue.toString());
+        plugin.getLogger().info("LOOK AT ME! I AM GETASSTRING OF THE BLOCKDATA! " + givenValue.getAsString());
+
+        return givenValue.getAsString();
     }
 
     @Override
@@ -51,7 +55,7 @@ public class InfiniteChestsMetadata extends MetadataPretender<Block, Material, S
     }
 
     @Override
-    protected Material convertStringToSimpleValue(String givenString) {
-        return Material.getMaterial(givenString);
+    protected BlockData convertStringToSimpleValue(String givenString) {
+        return plugin.getServer().createBlockData(givenString);
     }
 }

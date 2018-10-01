@@ -13,6 +13,7 @@ public final class Core extends JavaPlugin {
     public DataStorageUtil dataStorageUtil = new DataStorageUtil(this);
     public MetadataPretender MARKED_CHESTS = new InfiniteChestsMetadata(this);
     public ChestMetadataHandler chestMetadataHandler = new ChestMetadataHandler(this);
+    public InfiniteChestsCommandExecutor commandExecutor = new InfiniteChestsCommandExecutor(this);
 
     @Override
     public void onEnable() {
@@ -21,8 +22,9 @@ public final class Core extends JavaPlugin {
         PluginManager pm = getServer().getPluginManager();
         pm.registerEvents(chestListener, this);
 
-        getCommand(InfiniteChestsCommandExecutor.BIND_INFINITE_COMMAND).setExecutor(new InfiniteChestsCommandExecutor(this));
-        getCommand(InfiniteChestsCommandExecutor.UNBIND_INFINITE_COMMAND).setExecutor(new InfiniteChestsCommandExecutor(this));
+        getCommand(InfiniteChestsCommandExecutor.BIND_INFINITE_COMMAND).setExecutor(commandExecutor);
+        getCommand(InfiniteChestsCommandExecutor.UNBIND_INFINITE_COMMAND).setExecutor(commandExecutor);
+        getCommand(InfiniteChestsCommandExecutor.FORCE_BIND_INFINITE_ITEM_COMMAND).setExecutor(commandExecutor);
     }
 
     @Override

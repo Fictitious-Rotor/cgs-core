@@ -1,16 +1,21 @@
 name: InfiniteChests
 main: net.core.cgs.Core
-version: 1.0
+version: 1.1
 author: Fictitious_Rotor
 
 commands:
   bindinfiniteitem:
     description: Allows the player to convert a standard chest into an infinite chest
-    usage: "Hold an item, point at a chest and run /bindinfiniteitem to make the chest produce an infinite supply"
+    usage: Hold an item, point at a chest and run /bindinfiniteitem to make the chest produce an infinite supply
     permission: CGS.Core.bindinfiniteitem
     permission-message: You don't have <permission>
-  unbindinfinite:
+  unbindinfiniteitem:
     description: Allows the player to convert an infinite chest into a standard chest
     usage: Point at a chest, run /unbindinfinite
-    permission: CGS.Core.unbindinfinite
+    permission: CGS.Core.unbindinfiniteitem
+    permission-message: You don't have <permission>
+  forcebindinfiniteitem:
+    description: An override command for bindinfiniteitem. Allows the player to bypass frustrating bukkit limitations
+    usage: Point at a chest, run /forcebindinfiniteitem minecraft:item_name
+    permission: CGS.Core.forcebindinfiniteitem
     permission-message: You don't have <permission>

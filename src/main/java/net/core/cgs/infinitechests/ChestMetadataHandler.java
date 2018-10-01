@@ -4,6 +4,7 @@ import net.core.cgs.Core;
 import net.core.cgs.metadata.MetadataPretender;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.data.BlockData;
 
 public class ChestMetadataHandler {
     private Core plugin;
@@ -27,7 +28,7 @@ public class ChestMetadataHandler {
         return givenBlockIsChest(givenBlock) && givenBlockIsInfinite(givenBlock);
     }
 
-    public boolean makeBlockInfiniteChest(Block givenChest, Material infiniteItem) {
+    public boolean makeBlockInfiniteChest(Block givenChest, BlockData infiniteItem) {
         if (!givenBlockIsChest(givenChest)) return false;
 
         // Ensure chest isn't already infinite!
