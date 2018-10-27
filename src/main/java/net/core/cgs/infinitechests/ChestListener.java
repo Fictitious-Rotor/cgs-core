@@ -4,7 +4,6 @@ import net.core.cgs.Core;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
-import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -31,11 +30,11 @@ public class ChestListener implements Listener {
 
         if (plugin.chestMetadataHandler.givenBlockIsInfiniteChest(block)) {
             Inventory chestInv = ((Chest)(block.getState())).getBlockInventory();
-            BlockData infiniteItem = (BlockData)plugin.MARKED_CHESTS.getMetadata(block);
+            Material infiniteItem = (Material)plugin.MARKED_CHESTS.getMetadata(block);
             int nextEmptySlot = chestInv.firstEmpty();
 
             while (nextEmptySlot != -1) {
-                chestInv.setItem(nextEmptySlot, new ItemStack(infiniteItem.getMaterial(), infiniteItem.getMaterial().getMaxStackSize()));
+                chestInv.setItem(nextEmptySlot, new ItemStack(infiniteItem, infiniteItem.getMaxStackSize()));
                 nextEmptySlot = chestInv.firstEmpty();
             }
         }

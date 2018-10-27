@@ -3,7 +3,6 @@ package net.core.cgs;
 import net.core.cgs.data.DataStorageUtil;
 import net.core.cgs.infinitechests.*;
 import net.core.cgs.metadata.MetadataPretender;
-import org.bukkit.Material;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 

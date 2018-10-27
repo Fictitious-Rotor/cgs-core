@@ -3,9 +3,7 @@ package net.core.cgs.data;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import net.core.cgs.Core;
-import org.apache.commons.io.FileUtils;
 
-import java.io.File;
 import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.nio.file.Path;
