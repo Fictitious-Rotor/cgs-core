@@ -7,6 +7,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.logging.Level;
 
@@ -36,7 +37,7 @@ public class InfiniteChestsCommandExecutor implements CommandExecutor {
         switch (formalised) {
             case BIND_INFINITE_COMMAND : return bindInfiniteItem(runningPlayer);
             case UNBIND_INFINITE_COMMAND : return unbindInfinite(runningPlayer);
-            case FORCE_BIND_INFINITE_ITEM_COMMAND: if (split.length > 0) return forceBindInfiniteItem(runningPlayer, split[0]);
+            case FORCE_BIND_INFINITE_ITEM_COMMAND: return (split.length > 1) && forceBindInfiniteItem(runningPlayer, split[0], Byte.parseByte(split[1]));
             default: return false;
         }
     }
@@ -45,10 +46,12 @@ public class InfiniteChestsCommandExecutor implements CommandExecutor {
         Block foundBlock = runningPlayer.getTargetBlock(null, 6);
 
         if (plugin.chestMetadataHandler.givenBlockIsChest(foundBlock)) {
-            Material heldItemType = plugin.playerInteractor.getPlayerHeldMaterial(runningPlayer);
+            ItemStack heldItem = runningPlayer.getInventory().getItemInMainHand();
+            Material itemType = heldItem.getType();
+            byte itemHorrificMetadata = heldItem.getData().getData();
 
-            runningPlayer.sendMessage(String.format("InfiniteChests: You have bound the chest at %s to the material %s", foundBlock.getLocation().toString(), heldItemType));
-            return plugin.chestMetadataHandler.makeBlockInfiniteChest(foundBlock, heldItemType);
+            runningPlayer.sendMessage(String.format("InfiniteChests: You have bound the chest at %s to the material %s with the metadata of %s", foundBlock.getLocation().toString(), itemType, itemHorrificMetadata));
+            return plugin.chestMetadataHandler.makeBlockInfiniteChest(foundBlock, new HorrificBytesMaterialBundle(itemType, itemHorrificMetadata));
         }
         return false;
     }
@@ -62,7 +65,7 @@ public class InfiniteChestsCommandExecutor implements CommandExecutor {
         return false;
     }
 
-    private boolean forceBindInfiniteItem(Player runningPlayer, String specifiedMaterial) {
+    private boolean forceBindInfiniteItem(Player runningPlayer, String specifiedMaterial, byte specifiedMetadata) {
         Block foundBlock = runningPlayer.getTargetBlock(null, 6);
 
         if (plugin.chestMetadataHandler.givenBlockIsChest(foundBlock)) {
@@ -71,7 +74,7 @@ public class InfiniteChestsCommandExecutor implements CommandExecutor {
             if (specifiedBD != null) {
                 runningPlayer.sendMessage(String.format("InfiniteChests: You have bound the chest at %s to the material %s", foundBlock.getLocation().toString(), specifiedMaterial));
 
-                return plugin.chestMetadataHandler.makeBlockInfiniteChest(foundBlock, specifiedBD);
+                return plugin.chestMetadataHandler.makeBlockInfiniteChest(foundBlock, new HorrificBytesMaterialBundle(specifiedBD, specifiedMetadata));
             } else {
                 String errorMessage = String.format("InfiniteChests: Unable to bind chest to unrecognised argument: %s", specifiedMaterial);
                 runningPlayer.sendMessage(errorMessage);

@@ -30,7 +30,7 @@ public abstract class MetadataPretender<ComplexKey, ComplexValue, SimpleKey, Sim
         storeToFile();
     }
 
-    public boolean metadataContains(ComplexKey queryKey) {
+    public boolean metadataContainsKey(ComplexKey queryKey) {
         return metadataSet.containsKey(reduceComplexKeyToSimpleKey(queryKey));
     }
 

@@ -12,6 +12,8 @@ import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.logging.Level;
+
 public class ChestListener implements Listener {
     private Core plugin;
 
@@ -30,11 +32,12 @@ public class ChestListener implements Listener {
 
         if (plugin.chestMetadataHandler.givenBlockIsInfiniteChest(block)) {
             Inventory chestInv = ((Chest)(block.getState())).getBlockInventory();
-            Material infiniteItem = (Material)plugin.MARKED_CHESTS.getMetadata(block);
+
+            HorrificBytesMaterialBundle infiniteItem = (HorrificBytesMaterialBundle)plugin.MARKED_CHESTS.getMetadata(block);
             int nextEmptySlot = chestInv.firstEmpty();
 
             while (nextEmptySlot != -1) {
-                chestInv.setItem(nextEmptySlot, new ItemStack(infiniteItem, infiniteItem.getMaxStackSize()));
+                chestInv.setItem(nextEmptySlot, new ItemStack(infiniteItem.getItemType(), infiniteItem.getItemType().getMaxStackSize(), (short)infiniteItem.getItemMetadata()));
                 nextEmptySlot = chestInv.firstEmpty();
             }
         }

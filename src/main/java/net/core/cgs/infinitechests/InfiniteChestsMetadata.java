@@ -8,7 +8,7 @@ import org.bukkit.block.Block;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class InfiniteChestsMetadata extends MetadataPretender<Block, Material, String, Material> {
+public class InfiniteChestsMetadata extends MetadataPretender<Block, HorrificBytesMaterialBundle, String, HorrificBytesMaterialBundle> {
     public InfiniteChestsMetadata(Core instance) {
         super(instance);
     }
@@ -26,12 +26,12 @@ public class InfiniteChestsMetadata extends MetadataPretender<Block, Material, S
     }
 
     @Override
-    protected Material reduceComplexValueToSimpleValue(Material givenMaterial) {
+    protected HorrificBytesMaterialBundle reduceComplexValueToSimpleValue(HorrificBytesMaterialBundle givenMaterial) {
         return givenMaterial;
     }
 
     @Override
-    protected Material expandSimpleValueToComplexValue(Material givenValue) {
+    protected HorrificBytesMaterialBundle expandSimpleValueToComplexValue(HorrificBytesMaterialBundle givenValue) {
         return givenValue;
     }
 
@@ -41,10 +41,8 @@ public class InfiniteChestsMetadata extends MetadataPretender<Block, Material, S
     }
 
     @Override
-    protected String convertSimpleValueToString(Material givenValue) {
-        plugin.getLogger().info("LOOK AT ME! I AM THE TOSTRING OF THE MATERIAL! " + givenValue.toString());
-
-        return givenValue.toString();
+    protected String convertSimpleValueToString(HorrificBytesMaterialBundle givenValue) {
+        return String.format("%s %s", givenValue.getItemType().toString(), Byte.toString(givenValue.getItemMetadata()));
     }
 
     @Override
@@ -53,7 +51,12 @@ public class InfiniteChestsMetadata extends MetadataPretender<Block, Material, S
     }
 
     @Override
-    protected Material convertStringToSimpleValue(String givenString) {
-        return Material.getMaterial(givenString);
+    protected HorrificBytesMaterialBundle convertStringToSimpleValue(String givenString) {
+        String[] splitString = givenString.split(" ");
+
+        Material foundMaterial = Material.getMaterial(splitString[0]);
+        byte foundMetadata = Byte.valueOf(splitString[1]);
+
+        return new HorrificBytesMaterialBundle(foundMaterial, foundMetadata);
     }
 }

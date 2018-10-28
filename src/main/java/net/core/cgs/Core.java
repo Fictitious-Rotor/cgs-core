@@ -8,7 +8,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class Core extends JavaPlugin {
     public ChestListener chestListener = new ChestListener(this);
-    public PlayerInteractor playerInteractor = new PlayerInteractor(this);
     public DataStorageUtil dataStorageUtil = new DataStorageUtil(this);
     public MetadataPretender MARKED_CHESTS = new InfiniteChestsMetadata(this);
     public ChestMetadataHandler chestMetadataHandler = new ChestMetadataHandler(this);

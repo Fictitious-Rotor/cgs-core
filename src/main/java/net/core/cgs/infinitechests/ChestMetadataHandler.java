@@ -20,14 +20,14 @@ public class ChestMetadataHandler {
     }
 
     public boolean givenBlockIsInfinite(Block givenBlock) {
-        return metadata.metadataContains(givenBlock);
+        return metadata.metadataContainsKey(givenBlock);
     }
 
     public boolean givenBlockIsInfiniteChest(Block givenBlock) {
         return givenBlockIsChest(givenBlock) && givenBlockIsInfinite(givenBlock);
     }
 
-    public boolean makeBlockInfiniteChest(Block givenChest, Material infiniteItem) {
+    public boolean makeBlockInfiniteChest(Block givenChest, HorrificBytesMaterialBundle infiniteItem) {
         if (!givenBlockIsChest(givenChest)) return false;
 
         // Ensure chest isn't already infinite!
@@ -39,7 +39,7 @@ public class ChestMetadataHandler {
     }
 
     public boolean makeBlockFiniteChest(Block givenBlock) {
-        if (!givenBlockIsChest(givenBlock) || !metadata.metadataContains(givenBlock)) return false;
+        if (!givenBlockIsChest(givenBlock) || !metadata.metadataContainsKey(givenBlock)) return false;
 
         metadata.removeMetadata(givenBlock);
 

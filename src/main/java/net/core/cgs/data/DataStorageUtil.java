@@ -77,7 +77,7 @@ public class DataStorageUtil {
 
     private void backupStdFile() {
         try {
-            makeBackupFolderIfNotExists(BACKUP_FOLDER_FULL_LOCATION.toString());
+            makeBackupFolderIfNotExists();
 
             if (!Files.exists(STANDARD_FILE_FULL_LOCATION)) return;
             Files.copy(STANDARD_FILE_FULL_LOCATION, Paths.get(BACKUP_FOLDER_FULL_LOCATION.toString(), getNewBackupName()));
@@ -87,7 +87,7 @@ public class DataStorageUtil {
         }
     }
 
-    private void makeBackupFolderIfNotExists(String directoryName) {
+    private void makeBackupFolderIfNotExists() {
         if (!Files.exists(BACKUP_FOLDER_FULL_LOCATION)) {
             try {
                 Files.createDirectory(BACKUP_FOLDER_FULL_LOCATION);
