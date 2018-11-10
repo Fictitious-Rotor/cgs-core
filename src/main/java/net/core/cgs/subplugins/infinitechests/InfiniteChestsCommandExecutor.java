@@ -8,6 +8,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import ru.beykerykt.lightapi.LightAPI;
 
 import java.util.logging.Level;
 
@@ -51,6 +52,11 @@ public class InfiniteChestsCommandExecutor implements CommandExecutor {
             byte itemHorrificMetadata = heldItem.getData().getData();
 
             runningPlayer.sendMessage(String.format("InfiniteChests: You have bound the chest at %s to the material %s with the metadata of %s", foundBlock.getLocation().toString(), itemType, itemHorrificMetadata));
+
+            if (AirMaterialUtils.materialIsSomeFormOfAir(itemType)) {
+                runningPlayer.sendMessage(new String[]{ "CAUTION:", "YOU HAVE BOUND THIS CHEST TO AIR, WHICH MEANS THAT ANY ITEMS PLACED INTO THIS CHEST WILL BE DELETED WHEN THE CHEST IS NEXT OPENED", "ENSURE THAT YOU MARK THIS CHEST APPROPRIATELY, SO THAT VALUABLES ARE NOT PLACED WITHIN" });
+            }
+
             return plugin.chestMetadataHandler.makeBlockInfiniteChest(foundBlock, new HorrificBytesMaterialBundle(itemType, itemHorrificMetadata));
         }
         return false;

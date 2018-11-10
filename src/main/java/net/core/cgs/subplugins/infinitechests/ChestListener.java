@@ -35,10 +35,24 @@ public class ChestListener implements Listener {
 
             HorrificBytesMaterialBundle infiniteItem = (HorrificBytesMaterialBundle)plugin.MARKED_CHESTS.getMetadata(block);
             int nextEmptySlot = chestInv.firstEmpty();
+            final int timeoutCount = chestInv.getSize();
+            int iterationCount = 0;
+
+            if (AirMaterialUtils.materialIsSomeFormOfAir(infiniteItem.getItemType())) {
+                chestInv.clear();
+                return;
+            }
 
             while (nextEmptySlot != -1) {
                 chestInv.setItem(nextEmptySlot, new ItemStack(infiniteItem.getItemType(), infiniteItem.getItemType().getMaxStackSize(), (short)infiniteItem.getItemMetadata()));
                 nextEmptySlot = chestInv.firstEmpty();
+
+                if (iterationCount >= timeoutCount) {
+                    player.sendMessage(new String[]{ "ALERT:", "Your request for item of: ", infiniteItem.getItemType().toString(), "triggered a timeout!"});
+                    break;
+                }
+
+                iterationCount++;
             }
         }
     }
