@@ -1,21 +1,44 @@
-name: InfiniteChests
-main: net.core.cgs.Core
-version: 1.1
+name: CGS-Core
+main: org.core.cgs.Core
+version: 1.5
+api-version: 1.13
 author: Fictitious_Rotor
 
 commands:
+  # Infinite chests
+  infinitechests:
+      description: Infinite chests default command. Does nothing
   bindinfiniteitem:
     description: Allows the player to convert a standard chest into an infinite chest
     usage: Hold an item, point at a chest and run /bindinfiniteitem to make the chest produce an infinite supply
-    permission: CGS.Core.bindinfiniteitem
-    permission-message: You don't have <permission>
   unbindinfiniteitem:
     description: Allows the player to convert an infinite chest into a standard chest
     usage: Point at a chest, run /unbindinfinite
-    permission: CGS.Core.unbindinfiniteitem
-    permission-message: You don't have <permission>
   forcebindinfiniteitem:
     description: An override command for bindinfiniteitem. Allows the player to bypass frustrating bukkit limitations
     usage: Point at a chest, run /forcebindinfiniteitem minecraft:item_name
-    permission: CGS.Core.forcebindinfiniteitem
-    permission-message: You don't have <permission>
+
+  # Light Utils
+  lightutils:
+      description: Light utils default command. Does nothing
+  createlight:
+    description: Allows the player to create a light source of power 15 emitting from the block that they're currently looking at
+    usage: Point at a block, run /createlight
+  removelight:
+    description: Allows the player to remove a created a light source from the block that they're currently looking at
+    usage: Point at a block that the player had previously used /createlight on. Run /removelight
+  makeblockintolight:
+    description: Convert a block into light
+    usage: Point at a block and run /makeblockintolight
+  blockifylightinradius:
+    description: Convert all the manufactured light in the given radius into the block held in your hand
+    usage: Hold a block (air is viable) and run /blockifylightinradius
+  lightifyblocksinradius:
+    description: Find, in the given radius, all of the blocks matching the item in your hand. Convert all of these into light
+    usage: Hold a block (air is viable) and run /lightifyblockinradius
+  blockifylightinrange:
+    description: Convert all of the manufactured light in the given range into the block held in your hand
+    usage: Hold a block (air is viable) and run /blockifylightinrange
+  lightifyblocksinrange:
+    description: Find, in the given range, all of the blocks matching the item in your hand. Convert all of these into light
+    usage: Hold a block (air is viable) and run /lightifyblockinrange

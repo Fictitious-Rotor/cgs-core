@@ -4,9 +4,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>net.core.cgs</groupId>
+    <groupId>org.core.cgs</groupId>
     <artifactId>CGS-Core</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.5</version>
 
     <build>
         <plugins>
@@ -30,17 +30,26 @@
         </plugins>
     </build>
     <repositories>
+        <!--<repository>-->
+            <!--<id>dependencies-local</id>-->
+            <!--<name>data</name>-->
+            <!--<url>file://${project.basedir}/lib</url>-->
+        <!--</repository>-->
         <repository>
             <id>spigot-repo</id>
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
         </repository>
+        <!--<repository>-->
+            <!--<id>maven.sainttx.com</id>-->
+            <!--<url>http://maven.sainttx.com/nexus/content/groups/public/</url>-->
+        <!--</repository>-->
     </repositories>
     <dependencies>
         <!--Spigot API-->
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.13-R0.1-SNAPSHOT</version>
+            <version>LATEST</version>
             <scope>provided</scope>
         </dependency>
         <!--Bukkit API-->
@@ -54,6 +63,23 @@
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
+            <version>2.6</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>5.3.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>ru.beykerykt.lightapi</groupId>
+            <artifactId>light-api</artifactId>
+            <version>3.2.7</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sainttx.holograms</groupId>
+            <artifactId>holograms</artifactId>
             <version>2.6</version>
         </dependency>
     </dependencies>
