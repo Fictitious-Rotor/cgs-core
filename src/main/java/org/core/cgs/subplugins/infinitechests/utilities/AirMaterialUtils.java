@@ -1,4 +1,4 @@
-package org.core.cgs.subplugins.infinitechests;
+package org.core.cgs.subplugins.infinitechests.utilities;
 
 import org.bukkit.Material;
 

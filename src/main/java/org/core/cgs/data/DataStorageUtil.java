@@ -33,11 +33,11 @@ public class DataStorageUtil {
         subPlugsToPaths.put(subPluginName, constructSubPluginFileDetails(basePath, subPluginName));
     }
 
-    private void createSubPluginFoldersIfNotExisting(String curPath, String subPluginName) {
+    private void createSubPluginFoldersIfNotExisting(final String curPath, final String subPluginName) {
         makeFolderIfNotExists(Paths.get(curPath, subPluginName));
     }
 
-    private Map<FileSystemName, Path> constructSubPluginFileDetails(String curPath, String subPluginName) {
+    private Map<FileSystemName, Path> constructSubPluginFileDetails(final String curPath, final String subPluginName) {
         ImmutableMap.Builder<FileSystemName, Path> subPluginPaths = ImmutableMap.builder();
 
         for (FileSystemName fileSystemName : FileSystemName.values()) {
@@ -79,7 +79,7 @@ public class DataStorageUtil {
     }
 
     private Map<String, String> createMapFromString(final String mapToBe) {
-        Type type = new TypeToken<Map<String, String>>(){}.getType();
+        final Type type = new TypeToken<Map<String, String>>(){}.getType();
         return new Gson().fromJson(mapToBe, type);
     }
 
@@ -97,7 +97,7 @@ public class DataStorageUtil {
         }
     }
 
-    private void backupPreviousSession(String subPluginName) {
+    private void backupPreviousSession(final String subPluginName) {
         try {
             makeFolderIfNotExists(getPathFromPlugin(subPluginName, BACKUP_FOLDER));
 
@@ -112,7 +112,7 @@ public class DataStorageUtil {
         }
     }
 
-    private void makeFolderIfNotExists(Path folderPath) {
+    private void makeFolderIfNotExists(final Path folderPath) {
         if (!Files.exists(folderPath)) {
             try {
                 Files.createDirectory(folderPath);
@@ -123,8 +123,9 @@ public class DataStorageUtil {
         }
     }
 
-    private Path getPathFromPlugin(String subPluginName, FileSystemName fileSystemName) {
-        return subPlugsToPaths.get(subPluginName).get(fileSystemName);
+    private Path getPathFromPlugin(final String subPluginName, final FileSystemName fileSystemName) {
+        return subPlugsToPaths.get(subPluginName)
+                              .get(fileSystemName);
     }
 
     private String getNewBackupName() {
@@ -137,9 +138,9 @@ public class DataStorageUtil {
         BACKUP_FOLDER("Backups"),
         SHOULD_BACKUP_FILE("ShouldBackup");
 
-        private String name;
+        private final String name;
 
-        FileSystemName(String name) {
+        FileSystemName(final String name) {
             this.name = name;
         }
     }

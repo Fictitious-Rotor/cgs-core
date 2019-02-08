@@ -4,28 +4,31 @@ import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.core.cgs.subplugins.infinitechests.AirMaterialUtils;
-import org.core.cgs.subplugins.infinitechests.InfiniteChestsCore;
-import org.core.cgs.subplugins.infinitechests.functions.ICFunctions;
+import org.core.cgs.generic.abstracts.CGSListener;
+import org.core.cgs.generic.classes.MetadataBundle;
+import org.core.cgs.generic.utilities.PlayerInterface;
+import org.core.cgs.generic.utilities.PrimedPLI;
+import org.core.cgs.subplugins.infinitechests.backends.unbind;
 import org.core.cgs.subplugins.infinitechests.metadata.ChestStoredMH;
 import org.core.cgs.subplugins.infinitechests.metadata.HorrificBytesMaterialBundle;
+import org.core.cgs.subplugins.infinitechests.utilities.AirMaterialUtils;
 
-import static org.core.cgs.subplugins.infinitechests.InfiniteChestsCore.PLI;
+public class ChestListener extends CGSListener {
+    private final ChestStoredMH chestMetadataHandler;
 
-public class ChestListener implements Listener {
-    private final ChestStoredMH metadataHandler;
+    public ChestListener(final MetadataBundle metadataBundle,
+                         final PlayerInterface playerInterface) {
+        super(metadataBundle, playerInterface);
 
-    public ChestListener(ChestStoredMH metadataHandler) {
-        this.metadataHandler = metadataHandler;
+        this.chestMetadataHandler = metadataBundle.getHandler(ChestStoredMH.class);
     }
 
-    private static Chest toChest(Block givenBlock) {
-        return ((Chest)(givenBlock.getState()));
+    private static Chest toChest(final Block givenBlock) {
+        return (Chest)(givenBlock.getState());
     }
 
     /**
@@ -33,16 +36,17 @@ public class ChestListener implements Listener {
      * @param event Eventargs
      */
     @EventHandler
-    public void onInventoryOpenEvent(InventoryOpenEvent event) {
-        HumanEntity player = event.getPlayer();
-        Block block = player.getTargetBlock(null, 6);
+    public void onInventoryOpenEvent(final InventoryOpenEvent event) {
+        final HumanEntity player = event.getPlayer();
+        final Block block = player.getTargetBlock(null, 6);
+        final PrimedPLI PPLI = playerInterface.prime(player);
 
-        if (metadataHandler.givenBlockIsInfiniteChest(block)) {
+        if (chestMetadataHandler.givenBlockIsInfiniteChest(block)) {
             Inventory chestInv = toChest(block).getBlockInventory();
 
-            HorrificBytesMaterialBundle infiniteItem = metadataHandler.getInfiniteItem(block);
-            int nextEmptySlot = chestInv.firstEmpty();
+            final HorrificBytesMaterialBundle infiniteItem = chestMetadataHandler.getInfiniteItem(block);
             final int timeoutCount = chestInv.getSize();
+            int nextEmptySlot = chestInv.firstEmpty();
             int iterationCount = 0;
 
             if (AirMaterialUtils.materialIsSomeFormOfAir(infiniteItem.getItemType())) {
@@ -55,10 +59,9 @@ public class ChestListener implements Listener {
                 nextEmptySlot = chestInv.firstEmpty();
 
                 if (iterationCount >= timeoutCount) {
-                    PLI.sendToPlayer(player,
-                                     "ALERT:",
-                                     String.format("Your request for item of: %s", infiniteItem.getItemType()),
-                                     "triggered a timeout!"
+                    PPLI.sendToPlayer("ALERT:",
+                                      String.format("Your request for item of type: '%s'", infiniteItem.getItemType()),
+                                      "triggered a timeout!"
                     );
                     break;
                 }
@@ -76,9 +79,8 @@ public class ChestListener implements Listener {
     public void onBlockBreak(BlockBreakEvent event){
         Block block = event.getBlock();
 
-        if (metadataHandler.givenBlockIsInfiniteChest(block)) {
-            ICFunctions.unbindInfinite(event.getPlayer(), InfiniteChestsCore.ICStoredMH.getHandlerAs(ChestStoredMH.class));
-            metadataHandler.makeBlockFiniteChest(block);
+        if (chestMetadataHandler.givenBlockIsInfiniteChest(block)) {
+            unbind.unbindInfinite(block, playerInterface.prime(event.getPlayer()), chestMetadataHandler);
         }
     }
 }

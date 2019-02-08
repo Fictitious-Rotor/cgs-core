@@ -6,14 +6,14 @@ import org.bukkit.entity.HumanEntity;
 public class PlayerInterface {
     private final String subPluginName;
 
-    public PlayerInterface(String subPluginName) {
+    public PlayerInterface(final String subPluginName) {
         this.subPluginName = subPluginName;
     }
 
-    public void sendToPlayer(HumanEntity receiver, String... messages) {
+    public void sendToPlayer(final HumanEntity receiver, final String... messages) {
         StringBuilder toSend = new StringBuilder();
 
-        toSend.append(ChatColor.BOLD).append(ChatColor.YELLOW)
+        toSend.append(ChatColor.BOLD).append(ChatColor.GOLD)
               .append(subPluginName).append(": ")
               .append(ChatColor.ITALIC).append(ChatColor.DARK_AQUA);
 
@@ -25,5 +25,9 @@ public class PlayerInterface {
         toSend.append(ChatColor.RESET);
 
         receiver.sendMessage(toSend.toString());
+    }
+
+    public PrimedPLI prime(final HumanEntity receiver) {
+        return new PrimedPLI(subPluginName, receiver);
     }
 }
