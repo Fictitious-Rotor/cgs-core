@@ -1,21 +1,17 @@
-name: InfiniteChests
-main: net.core.cgs.Core
-version: 1.1
+name: CGS-Core
+main: org.core.cgs.Core
+version: 2.1
+api-version: 1.13
 author: Fictitious_Rotor
+depend: [ LightAPI, Holograms ]
 
 commands:
-  bindinfiniteitem:
-    description: Allows the player to convert a standard chest into an infinite chest
-    usage: Hold an item, point at a chest and run /bindinfiniteitem to make the chest produce an infinite supply
-    permission: CGS.Core.bindinfiniteitem
-    permission-message: You don't have <permission>
-  unbindinfiniteitem:
-    description: Allows the player to convert an infinite chest into a standard chest
-    usage: Point at a chest, run /unbindinfinite
-    permission: CGS.Core.unbindinfiniteitem
-    permission-message: You don't have <permission>
-  forcebindinfiniteitem:
-    description: An override command for bindinfiniteitem. Allows the player to bypass frustrating bukkit limitations
-    usage: Point at a chest, run /forcebindinfiniteitem minecraft:item_name
-    permission: CGS.Core.forcebindinfiniteitem
-    permission-message: You don't have <permission>
+  # Infinite chests
+  infinitechests:
+    description: InfiniteChests parent command
+    usage: Did not recognise the provided sub command. Run '/infinitechests help' for available subcommands!
+
+  # Light Utils
+  lightutils:
+    description: LightUtils parent command
+    usage: Did not recognise provided sub command. Run '/lightutils help' for available subcommands!
