@@ -3,7 +3,7 @@ package org.core.cgs.data;
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import org.core.cgs.Core;
+import org.core.cgs.generic.classes.SubPlugin;
 
 import java.lang.reflect.Type;
 import java.nio.file.Files;
@@ -14,12 +14,14 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
 
+import static java.util.logging.Level.INFO;
+import static java.util.logging.Level.SEVERE;
+import static org.core.cgs.Core.LOGGER;
 import static org.core.cgs.data.DataStorageUtil.FileSystemName.*;
 
 public class DataStorageUtil {
-    private final Map<String, Map<FileSystemName, Path>> subPlugsToPaths;
+    private final Map<String, SubPluginFolderInfo> subPlugsToPaths;
     private final String basePath;
 
     public DataStorageUtil(String basePath) {
@@ -27,24 +29,27 @@ public class DataStorageUtil {
         subPlugsToPaths = new HashMap<>();
     }
 
-    public void registerSubPlugin(String subPluginName) {
-        createSubPluginFoldersIfNotExisting(basePath, subPluginName);
+    public void registerSubPlugin(final SubPlugin subPlugin) {
+        createSubPluginFoldersIfNotExisting(basePath, subPlugin.getSimpleName());
+        LOGGER.log(INFO, "subPlugin.getSimpleName() = {0}", subPlugin.getSimpleName());
 
-        subPlugsToPaths.put(subPluginName, constructSubPluginFileDetails(basePath, subPluginName));
+        subPlugsToPaths.put(subPlugin.getSimpleName(), constructSubPluginFileDetails(basePath, subPlugin.getSimpleName()));
+        LOGGER.log(INFO, "subPlugsToPaths = {0}", subPlugsToPaths);
+        subPlugin.registerMetadataHandlers();
     }
 
     private void createSubPluginFoldersIfNotExisting(final String curPath, final String subPluginName) {
         makeFolderIfNotExists(Paths.get(curPath, subPluginName));
     }
 
-    private Map<FileSystemName, Path> constructSubPluginFileDetails(final String curPath, final String subPluginName) {
-        ImmutableMap.Builder<FileSystemName, Path> subPluginPaths = ImmutableMap.builder();
+    private SubPluginFolderInfo constructSubPluginFileDetails(final String curPath, final String subPluginName) {
+        final ImmutableMap.Builder<FileSystemName, Path> subPluginPaths = ImmutableMap.builder();
 
-        for (FileSystemName fileSystemName : FileSystemName.values()) {
+        for (final FileSystemName fileSystemName : FileSystemName.values()) {
             subPluginPaths.put(fileSystemName, Paths.get(curPath, subPluginName, fileSystemName.name));
         }
 
-        return subPluginPaths.build();
+        return new SubPluginFolderInfo(subPluginPaths.build());
     }
 
     public void storeCurrentSession(final Map<String, String> mapToWrite, final String subPluginName) {
@@ -92,7 +97,7 @@ public class DataStorageUtil {
                 backupPreviousSession(subPluginName);
             }
         } catch (Exception ex) {
-            Core.LOGGER.log(Level.SEVERE, ex.getMessage());
+            LOGGER.log(SEVERE, ex.getMessage());
             throw new JavaCheckedHissyFitException(ex);
         }
     }
@@ -107,7 +112,7 @@ public class DataStorageUtil {
 
             Files.copy(previousSessionPath, Paths.get(backupFolderPath.toString(), getNewBackupName()));
         } catch (Exception ex) {
-            Core.LOGGER.log(Level.SEVERE, ex.getMessage());
+            LOGGER.log(SEVERE, ex.getMessage());
             throw new JavaCheckedHissyFitException(ex);
         }
     }
@@ -117,14 +122,13 @@ public class DataStorageUtil {
             try {
                 Files.createDirectory(folderPath);
             } catch (Exception ex) {
-                Core.LOGGER.log(Level.SEVERE, ex.getMessage());
                 throw new JavaCheckedHissyFitException(ex);
             }
         }
     }
 
     private Path getPathFromPlugin(final String subPluginName, final FileSystemName fileSystemName) {
-        return subPlugsToPaths.get(subPluginName)
+        return subPlugsToPaths.computeIfAbsent(subPluginName, (s) -> { throw new MissingFolderInfoException(subPluginName); })
                               .get(fileSystemName);
     }
 

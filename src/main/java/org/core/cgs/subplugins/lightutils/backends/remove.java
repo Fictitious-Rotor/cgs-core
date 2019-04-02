@@ -5,14 +5,14 @@ import org.bukkit.entity.Player;
 import org.core.cgs.generic.classes.MetadataBundle;
 import org.core.cgs.generic.interfaces.CommandBackend;
 import org.core.cgs.generic.utilities.PrimedPLI;
-import org.core.cgs.subplugins.lightutils.metadata.LightLocationStoredMH;
+import org.core.cgs.subplugins.lightutils.metadata.stored.LightLocationStoredMH;
 
 import static org.core.cgs.subplugins.lightutils.utils.LightUtils.killLight;
 import static org.core.cgs.subplugins.lightutils.utils.ReportUtils.reportDestruction;
 
 public class remove implements CommandBackend {
     @Override
-    public boolean run(final Player runningPlayer,
+    public void run(final Player runningPlayer,
                        final PrimedPLI PPLI,
                        final String[] arguments,
                        final MetadataBundle metadataBundle) {
@@ -22,6 +22,5 @@ public class remove implements CommandBackend {
         final boolean succeeded = killLight(runningPlayer, targetedBlock.getLocation(), mH);
 
         reportDestruction(PPLI, succeeded);
-        return succeeded;
     }
 }

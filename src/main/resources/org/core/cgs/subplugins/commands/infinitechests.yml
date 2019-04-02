@@ -1,3 +1,4 @@
+plugin-name: Infinite Chests
 super-command: infinitechests
 
 sub-commands:
@@ -17,3 +18,7 @@ sub-commands:
     usage: Point at a chest, run /forcebindinfiniteitem minecraft:item_name
     arguments: <material, metadata>
     minimum-arity: 2
+
+  isinfinite:
+    description: Allows the player to check if a given chest is infinite
+    usage: Point at a chest

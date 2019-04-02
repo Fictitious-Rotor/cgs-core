@@ -10,10 +10,10 @@ import org.core.cgs.subplugins.lightutils.utils.ReportUtils;
 
 public class tolightrange extends RangeCommons implements CommandBackend {
     @Override
-    public boolean run(final Player runningPlayer,
+    public void run(final Player runningPlayer,
                        final PrimedPLI PPLI,
                        final String[] arguments,
                        final MetadataBundle metadataBundle) {
-        return performRangeOperation(PPLI, metadataBundle, LightUtils::convertBlockIntoLight, ReportUtils::reportMassLightification);
+        performRangeOperation(PPLI, metadataBundle, LightUtils::convertBlockIntoLight, ReportUtils::reportMassLightification);
     }
 }

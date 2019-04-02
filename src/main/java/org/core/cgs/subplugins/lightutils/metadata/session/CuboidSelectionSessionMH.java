@@ -1,4 +1,4 @@
-package org.core.cgs.subplugins.lightutils.metadata;
+package org.core.cgs.subplugins.lightutils.metadata.session;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -19,21 +19,16 @@ public class CuboidSelectionSessionMH implements SessionMetadataHandler {
 
     private final Map<Player, LocationPair> metadata = new HashMap<>();
 
-    public boolean setStartingPos(final Player player, final Location startingPos) {
-        final boolean containsKey = metadata.containsKey(player);
-        if (!containsKey) { metadata.put(player, new LocationPair()); }
+    public void setStartingPos(final Player player, final Location startingPos) {
+        if (!(metadata.containsKey(player))) { metadata.put(player, new LocationPair()); }
 
         metadata.get(player).startingPos = startingPos;
-        return containsKey;
     }
 
-    public boolean setFinishingPos(final Player player, final Location finishingPos) {
-        final boolean containsKey = metadata.containsKey(player);
+    public void setFinishingPos(final Player player, final Location finishingPos) {
+        if (!(metadata.containsKey(player))) { metadata.put(player, new LocationPair()); }
 
-        if (!containsKey) { metadata.put(player, new LocationPair()); }
         metadata.get(player).finishingPos = finishingPos;
-
-        return containsKey;
     }
 
     public LocationPair getLocationPair(final Player player) {

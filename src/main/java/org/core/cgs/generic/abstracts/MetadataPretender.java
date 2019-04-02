@@ -14,7 +14,6 @@ public abstract class MetadataPretender<MetadataKey, MetadataValue> {
 
     public MetadataPretender(String subPluginName) {
         this.subPluginName = subPluginName;
-        assembleFromPreviousSession();
     }
 
     public boolean addMetadata(MetadataKey givenKey, MetadataValue givenValue) {
@@ -48,7 +47,7 @@ public abstract class MetadataPretender<MetadataKey, MetadataValue> {
         return metadataSet.containsKey(convertMetadataKeyToString(queryKey));
     }
 
-    private void assembleFromPreviousSession() {
+    public void assembleFromPreviousSession() {
         try {
             metadataSet = Core.DATA_STORAGE_UTIL.getPreviousSession(subPluginName);
         } catch (JavaCheckedHissyFitException ex) {

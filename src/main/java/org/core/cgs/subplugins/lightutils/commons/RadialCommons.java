@@ -2,7 +2,7 @@ package org.core.cgs.subplugins.lightutils.commons;
 
 import org.core.cgs.generic.classes.MetadataBundle;
 import org.core.cgs.generic.utilities.PrimedPLI;
-import org.core.cgs.subplugins.lightutils.metadata.LightLocationStoredMH;
+import org.core.cgs.subplugins.lightutils.metadata.stored.LightLocationStoredMH;
 import org.core.cgs.subplugins.lightutils.utils.MultiblockFunctions;
 import org.core.cgs.subplugins.lightutils.utils.ReportUtils;
 

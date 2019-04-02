@@ -5,7 +5,7 @@ import org.bukkit.block.Block;
 import org.core.cgs.generic.abstracts.MetadataPretender;
 
 public class InfiniteChestsMetadata extends MetadataPretender<Block, HorrificBytesMaterialBundle> {
-    InfiniteChestsMetadata(final String subPluginName) {
+    public InfiniteChestsMetadata(final String subPluginName) {
         super(subPluginName);
     }
 

@@ -10,7 +10,7 @@ import org.core.cgs.generic.abstracts.CGSListener;
 import org.core.cgs.generic.classes.MetadataBundle;
 import org.core.cgs.generic.utilities.PlayerInterface;
 import org.core.cgs.generic.utilities.PrimedPLI;
-import org.core.cgs.subplugins.lightutils.metadata.CuboidSelectionSessionMH;
+import org.core.cgs.subplugins.lightutils.metadata.session.CuboidSelectionSessionMH;
 
 public class ShovelListener extends CGSListener {
     private static final Material ACTIVATING_MATERIAL = Material.WOODEN_SHOVEL;

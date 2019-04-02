@@ -2,6 +2,7 @@ package org.core.cgs.generic.classes;
 
 import org.core.cgs.generic.exceptions.MissingMetadataHandlerException;
 import org.core.cgs.generic.interfaces.MetadataHandler;
+import org.core.cgs.generic.interfaces.StoredMetadataHandler;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -22,5 +23,12 @@ public final class MetadataBundle {
                         .filter(cb -> cb.getClass().equals(handlerType))
                         .findFirst()
                         .orElseThrow(MissingMetadataHandlerException::new);
+    }
+
+    public void registerHandlers() {
+        Arrays.stream(allHandlers)
+              .filter(StoredMetadataHandler.class::isInstance)
+              .map(StoredMetadataHandler.class::cast)
+              .forEach(StoredMetadataHandler::registerPretenders);
     }
 }

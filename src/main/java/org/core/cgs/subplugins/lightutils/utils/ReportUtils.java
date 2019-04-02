@@ -23,4 +23,8 @@ public class ReportUtils {
     public static void reportMassBlockification(final PrimedPLI PPLI, final int noOfConvertedBlocks) {
         PPLI.sendToPlayer(String.format("Managed to convert %s light sources into blocks", noOfConvertedBlocks));
     }
+
+    public static void reportMassIdentification(final PrimedPLI PPLI, final int noOfConvertedBlocks) {
+        PPLI.sendToPlayer(String.format("Managed to identify %s light sources in total", noOfConvertedBlocks));
+    }
 }

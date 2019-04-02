@@ -6,9 +6,9 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.core.cgs.generic.utilities.PrimedPLI;
-import org.core.cgs.subplugins.lightutils.metadata.CuboidSelectionSessionMH;
-import org.core.cgs.subplugins.lightutils.metadata.CuboidSelectionSessionMH.LocationPair;
-import org.core.cgs.subplugins.lightutils.metadata.LightLocationStoredMH;
+import org.core.cgs.subplugins.lightutils.metadata.session.CuboidSelectionSessionMH;
+import org.core.cgs.subplugins.lightutils.metadata.session.CuboidSelectionSessionMH.LocationPair;
+import org.core.cgs.subplugins.lightutils.metadata.stored.LightLocationStoredMH;
 
 import java.util.Optional;
 

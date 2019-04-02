@@ -6,6 +6,7 @@ public final class SubPluginSubCommand {
     private final String usage;
     private final String arguments;
     private final int minimumArity;
+    private final boolean isHelpCommand;
 
     private String checkArg(final String argName, final String arg) {
         if (arg == null || arg.isEmpty()) {
@@ -24,10 +25,8 @@ public final class SubPluginSubCommand {
         this.usage          = checkArg("Usage", usage);
         this.arguments      = checkArg("Arguments", arguments);
         this.minimumArity   = Integer.parseInt(checkArg("MinimumArity", minimumArity));
-    }
 
-    public String getHelp() {
-        return String.format("Description: %s\nUsage: %s\nArguments: %s\nMinimim arity: %s", description, usage, arguments, minimumArity);
+        this.isHelpCommand = "help".equals(name);
     }
 
     public String getName() {
@@ -48,6 +47,10 @@ public final class SubPluginSubCommand {
 
     public int getMinimumArity() {
         return minimumArity;
+    }
+
+    public boolean isHelpCommand() {
+        return isHelpCommand;
     }
 
     private final class MissingParameterException extends RuntimeException {

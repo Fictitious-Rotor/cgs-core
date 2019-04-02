@@ -4,7 +4,7 @@ import org.bukkit.Location;
 import org.core.cgs.generic.abstracts.MetadataPretender;
 
 public class LightLocationMetadata extends MetadataPretender<Location, Integer> {
-    LightLocationMetadata(final String subPluginName) {
+    public LightLocationMetadata(final String subPluginName) {
         super(subPluginName);
     }
 

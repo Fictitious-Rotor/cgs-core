@@ -5,6 +5,7 @@ import org.bukkit.entity.Player;
 import org.core.cgs.generic.classes.SubPluginCommandFileConfig;
 import org.core.cgs.generic.classes.SubPluginSubCommand;
 
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public final class HelpCommandUtils {
@@ -18,13 +19,13 @@ public final class HelpCommandUtils {
         );
     }
 
-    public static boolean displayHelp(final Player runningPlayer,
-                                      final PlayerInterface playerInterface,
-                                      final String[] args,
-                                      final SubPluginCommandFileConfig sPCH,
-                                      final SubPluginSubCommand sPSC) {
-        if (args.length > 1) {
-            playerInterface.sendToPlayer(runningPlayer, "",
+    public static void displayHelp(final PrimedPLI primedPLI,
+                                   final SubPluginCommandFileConfig sPCH,
+                                   final String commandName) {
+        final SubPluginSubCommand sPSC = sPCH.getSubCommandFromName(commandName);
+
+        if (!(sPSC.isHelpCommand())) {
+            primedPLI.sendToPlayer("",
                                             String.format("%sHelp for subcommand '%s\'", ChatColor.YELLOW, sPSC.getName()),
                                             String.format("%sArguments: %s",                             ChatColor.YELLOW,                                   formatCommandAndArguments(sPCH.getCommandName(), sPSC)),
                                             String.format("%sDescription: %s%s",                         ChatColor.YELLOW, ChatColor.GRAY,                   sPSC.getDescription()),
@@ -38,8 +39,7 @@ public final class HelpCommandUtils {
                                          .collect(Collectors.toList())
                                          .toArray(new String[sPCH.getAllSubCommands().size()]); // I deeply despise java
 
-            playerInterface.sendToPlayer(runningPlayer, content);
+            primedPLI.sendToPlayer(content);
         }
-        return true;
     }
 }

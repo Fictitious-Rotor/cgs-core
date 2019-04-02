@@ -8,12 +8,12 @@ import org.core.cgs.subplugins.lightutils.commons.RadialCommons;
 import org.core.cgs.subplugins.lightutils.utils.LightUtils;
 import org.core.cgs.subplugins.lightutils.utils.ReportUtils;
 
-public class tolightradial extends RadialCommons implements CommandBackend {
+public class islitradial extends RadialCommons implements CommandBackend {
     @Override
     public void run(final Player runningPlayer,
                        final PrimedPLI PPLI,
                        final String[] arguments,
                        final MetadataBundle metadataBundle) {
-        performRadialOperation(PPLI, arguments, metadataBundle, LightUtils::convertBlockIntoLight, ReportUtils::reportMassLightification);
+        performRadialOperation(PPLI, arguments, metadataBundle, LightUtils::identifyBlock, ReportUtils::reportMassIdentification);
     }
 }

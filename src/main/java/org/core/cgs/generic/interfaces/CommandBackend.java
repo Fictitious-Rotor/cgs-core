@@ -5,8 +5,8 @@ import org.core.cgs.generic.classes.MetadataBundle;
 import org.core.cgs.generic.utilities.PrimedPLI;
 
 public interface CommandBackend {
-    boolean run(final Player runningPlayer,
-                final PrimedPLI PPLI,
-                final String[] arguments,
-                final MetadataBundle metadataBundle);
+    void run(final Player runningPlayer,
+             final PrimedPLI PPLI,
+             final String[] arguments,
+             final MetadataBundle metadataBundle);
 }

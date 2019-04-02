@@ -4,43 +4,46 @@ import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.PluginManager;
 import org.core.cgs.Core;
 import org.core.cgs.generic.abstracts.CGSListener;
-import org.core.cgs.generic.interfaces.MetadataHandler;
 import org.core.cgs.generic.utilities.PlayerInterface;
 
 import java.util.Set;
+import java.util.logging.Level;
 
+import static org.core.cgs.Core.LOGGER;
 import static org.core.cgs.generic.utilities.ExceptionUtils.getNullSafeMessage;
-import static org.core.cgs.generic.utilities.ReflectionUtils.instantiateClasses;
 
 public final class SubPlugin {
-    private final String subPluginName;
+    private final String subPluginEnglishName;
+    private final String subPluginSimpleName;
     private final String subPluginParentCommand;
     private final SubPluginCommandExecutor commandExecutor;
     private final Set<? extends CGSListener> listeners;
+    private final MetadataBundle metadataBundle;
 
-    public SubPlugin(final String configLocation) {
-        final SubPluginCommandFileConfig config = new SubPluginCommandFileConfig(configLocation);
+    public SubPlugin(final String pluginName, final MetadataBundle metadataBundle, final Set<? extends CGSListener> allListeners) {
+        LOGGER.log(Level.INFO, "pluginName = {0}", pluginName);
+        final SubPluginCommandFileConfig config = new SubPluginCommandFileConfig(String.format("subplugins/commands/%s.yml", pluginName));
 
-        this.subPluginName = config.getPluginName();
+        this.subPluginSimpleName = pluginName;
+        this.subPluginEnglishName = config.getPluginName();
         this.subPluginParentCommand = config.getCommandName();
 
         final PlayerInterface playerInterface = new PlayerInterface(subPluginParentCommand);
-        final String subPluginPackage = String.format("org.core.cgs.subplugins.%s", config.getCommandName());
-        final MetadataBundle metadataBundle = new MetadataBundle(instantiateClasses(subPluginPackage, "metadata", MetadataHandler.class));
 
-        this.commandExecutor = new SubPluginCommandExecutor(config, metadataBundle, playerInterface);
-        this.listeners = instantiateClasses(subPluginPackage,
-                                            "listeners",
-                                            CGSListener.class,
-                                            new Class<?>[]{ MetadataBundle.class, PlayerInterface.class },
-                                            new Object[]{metadataBundle, playerInterface });
+        this.commandExecutor = new SubPluginCommandExecutor(pluginName, config, metadataBundle, playerInterface);
+        this.listeners = allListeners;
+        this.metadataBundle = metadataBundle;
     }
 
-    public String getName() {
-        return subPluginName;
+    public String getSimpleName() {
+        return subPluginSimpleName;
     }
 
-    public void registerCommands(Core plugin) {
+    public String getEnglishName() {
+        return subPluginEnglishName;
+    }
+
+    public void registerCommands(final Core plugin) {
         final PluginCommand pluginCommand = plugin.getCommand(subPluginParentCommand);
 
         if (pluginCommand != null) {
@@ -50,8 +53,12 @@ public final class SubPlugin {
         }
     }
 
-    public void registerEvents(Core plugin, PluginManager pluginManager) {
+    public void registerEvents(final Core plugin, final PluginManager pluginManager) {
         listeners.forEach(listener -> pluginManager.registerEvents(listener, plugin));
+    }
+
+    public void registerMetadataHandlers() {
+        metadataBundle.registerHandlers();
     }
 
     private class PluginNotInYamlException extends RuntimeException {

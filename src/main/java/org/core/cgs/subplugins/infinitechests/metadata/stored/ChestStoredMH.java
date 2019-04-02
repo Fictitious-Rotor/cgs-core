@@ -1,9 +1,11 @@
-package org.core.cgs.subplugins.infinitechests.metadata;
+package org.core.cgs.subplugins.infinitechests.metadata.stored;
 
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.core.cgs.generic.abstracts.MetadataPretender;
 import org.core.cgs.generic.interfaces.StoredMetadataHandler;
+import org.core.cgs.subplugins.infinitechests.metadata.HorrificBytesMaterialBundle;
+import org.core.cgs.subplugins.infinitechests.metadata.InfiniteChestsMetadata;
 
 public class ChestStoredMH implements StoredMetadataHandler {
     private static final Material VALID_MATERIAL = Material.CHEST;
@@ -11,6 +13,11 @@ public class ChestStoredMH implements StoredMetadataHandler {
 
     public ChestStoredMH(String subPluginName) {
         metadata = new InfiniteChestsMetadata(subPluginName);
+    }
+
+    @Override
+    public void registerPretenders() {
+        metadata.assembleFromPreviousSession();
     }
 
     public boolean givenBlockIsChest(Block givenBlock) {

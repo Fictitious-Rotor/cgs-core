@@ -47,7 +47,26 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <outputDirectory>D:\Program Files\Minecraft\MinecraftHub\CGS\Backups\Latest (For plugin dev)\plugins</outputDirectory>
+                    <outputDirectory>${exportLocation}</outputDirectory>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.6.0</version>
+                <executions>
+                    <execution>
+                        <id>SubPlugin-Codegen</id>
+                        <phase>pre-clean</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <executable>${bashLocation}</executable>
+                    <workingDirectory>${project.basedir}/codegen</workingDirectory>
+                    <commandlineArgs>GenerateCode.sh</commandlineArgs>
                 </configuration>
             </plugin>
             <!--<plugin>-->
@@ -141,7 +160,7 @@
         <dependency>
             <groupId>ru.beykerykt.lightapi</groupId>
             <artifactId>light-api</artifactId>
-            <version>3.2.7</version>
+            <version>3.2.9</version>
             <scope>provided</scope>
 
         </dependency>
@@ -157,14 +176,13 @@
             <groupId>com.esotericsoftware.yamlbeans</groupId>
             <artifactId>yamlbeans</artifactId>
             <version>1.13</version>
-            <!--<scope>runtime</scope>-->
         </dependency>
-        <!--https://search.maven.org/artifact/org.reflections/reflections/0.9.11/jar-->
-        <dependency>
-            <groupId>org.reflections</groupId>
-            <artifactId>reflections</artifactId>
-            <version>0.9.11</version>
-            <!--<scope>runtime</scope>-->
-        </dependency>
+        <!--&lt;!&ndash;https://search.maven.org/artifact/org.reflections/reflections/0.9.11/jar&ndash;&gt;-->
+        <!--<dependency>-->
+            <!--<groupId>org.reflections</groupId>-->
+            <!--<artifactId>reflections</artifactId>-->
+            <!--<version>0.9.11</version>-->
+            <!--&lt;!&ndash;<scope>runtime</scope>&ndash;&gt;-->
+        <!--</dependency>-->
     </dependencies>
 </project>

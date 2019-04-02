@@ -13,7 +13,7 @@ import org.core.cgs.generic.classes.MetadataBundle;
 import org.core.cgs.generic.utilities.PlayerInterface;
 import org.core.cgs.generic.utilities.PrimedPLI;
 import org.core.cgs.subplugins.infinitechests.backends.unbind;
-import org.core.cgs.subplugins.infinitechests.metadata.ChestStoredMH;
+import org.core.cgs.subplugins.infinitechests.metadata.stored.ChestStoredMH;
 import org.core.cgs.subplugins.infinitechests.metadata.HorrificBytesMaterialBundle;
 import org.core.cgs.subplugins.infinitechests.utilities.AirMaterialUtils;
 

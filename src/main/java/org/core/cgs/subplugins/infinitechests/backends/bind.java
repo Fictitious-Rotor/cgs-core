@@ -14,46 +14,46 @@ import org.core.cgs.generic.classes.MetadataBundle;
 import org.core.cgs.generic.interfaces.CommandBackend;
 import org.core.cgs.generic.utilities.PrimedPLI;
 import org.core.cgs.subplugins.infinitechests.commons.BindCommons;
-import org.core.cgs.subplugins.infinitechests.metadata.ChestStoredMH;
+import org.core.cgs.subplugins.infinitechests.metadata.stored.ChestStoredMH;
 import org.core.cgs.subplugins.infinitechests.metadata.HorrificBytesMaterialBundle;
 import org.core.cgs.subplugins.infinitechests.utilities.AirMaterialUtils;
 
 
 public class bind extends BindCommons implements CommandBackend {
     @Override
-    public boolean run(final Player runningPlayer,
+    public void run(final Player runningPlayer,
                        final PrimedPLI PPLI,
                        final String[] arguments,
                        final MetadataBundle metadataBundle) {
         final Block foundBlock = runningPlayer.getTargetBlock(null, 6);
         final ChestStoredMH chestMetadataHandler = metadataBundle.getHandler(ChestStoredMH.class);
 
-        return bindToChest(runningPlayer, foundBlock, chestMetadataHandler, PPLI);
+        bindToChest(runningPlayer, foundBlock, chestMetadataHandler, PPLI);
     }
 
-    public static boolean bindToChest(final Player runningPlayer,
+    private static void bindToChest(final Player runningPlayer,
                                       final Block foundBlock,
                                       final ChestStoredMH chestMetadataHandler,
                                       final PrimedPLI PPLI) {
-        if (chestMetadataHandler.givenBlockIsChest(foundBlock)) {
-            final ItemStack heldItem = runningPlayer.getInventory().getItemInMainHand();
-            final Material itemType = heldItem.getType();
-            final byte itemHorrificMetadata = heldItem.getData().getData();
-
-            if (AirMaterialUtils.materialIsSomeFormOfAir(itemType)) {
-                createVoidChest(foundBlock, PPLI);
-                return true;
-            }
-
-            reportInfiniteChestCreation(PPLI, foundBlock, itemType, itemHorrificMetadata);
-
-            return chestMetadataHandler.makeBlockInfiniteChest(foundBlock, new HorrificBytesMaterialBundle(itemType, itemHorrificMetadata));
+        if (!(chestMetadataHandler.givenBlockIsChest(foundBlock))) {
+            PPLI.sendToPlayer("This command only works on chests", "Run '/infinitechests help bind' for more information");
         }
-        return false;
+
+        final ItemStack heldItem = runningPlayer.getInventory().getItemInMainHand();
+        final Material itemType = heldItem.getType();
+        final byte itemHorrificMetadata = heldItem.getData().getData();
+
+        if (AirMaterialUtils.materialIsSomeFormOfAir(itemType)) {
+            createVoidChest(foundBlock, PPLI);
+        } else {
+            reportInfiniteChestCreation(PPLI, foundBlock, itemType, itemHorrificMetadata);
+        }
+
+        chestMetadataHandler.makeBlockInfiniteChest(foundBlock, new HorrificBytesMaterialBundle(itemType, itemHorrificMetadata));
     }
 
-    public static void createVoidChest(final Block foundBlock,
-                                       final PrimedPLI PPLI) {
+    private static void createVoidChest(final Block foundBlock,
+                                        final PrimedPLI PPLI) {
         final Location chestLocation = foundBlock.getLocation().clone();
         final String hologramName = formatChestLocation(chestLocation);
 

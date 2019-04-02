@@ -1,3 +1,5 @@
 package org.core.cgs.generic.interfaces;
 
-public interface StoredMetadataHandler extends MetadataHandler {}
+public interface StoredMetadataHandler extends MetadataHandler {
+    void registerPretenders();
+}
