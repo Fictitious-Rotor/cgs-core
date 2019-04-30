@@ -1,0 +1,62 @@
+plugin-name: Light Utils
+super-command: infinitechests
+
+sub-commands:
+  help:
+    description: Display help for this command
+  create:
+    description: Allows the player to create a light source of a specified power, emitting from the block that they're currently looking at
+    usage: Point at a block
+    arguments: <light level/power>
+  remove:
+    description: Allows the player to remove a created light source from the block that they're currently looking at
+    usage: Point at a block that the player had previously used /infinitechests create on
+  tolight:
+    description: Convert a block into light
+    usage: Point at a block
+  islit:
+    description: Check if a given block has been marked as an artificial lightsource
+    usage: Point at a block
+  wand:
+    description: Receive a wand with which to define ranges. While holding the wand, MB1 sets pos1 and MB2 sets pos2
+
+#  radial:
+#    description: Run a command as a radial operation.
+#    usage: Each command has a radial equivalent - for example /infinitechests radial create
+#    arguments: <radius>
+#
+#  range:
+#    description: Run a command as a range operation.
+#    usage: Each command has a range equivalent - for example /infinitechests range remove
+#    arguments: <range>
+
+
+  toblockradial:
+    description: Convert all the manufactured light in the green radius into the block held in your hand
+    usage: Hold a block (air is viable)
+    arguments: <radius>
+    minimum-arity: 1
+  tolightradial:
+    description: Find, in the given radius, all of the blocks matching the item in your hand. Convert all of these into light
+    usage: Hold a block (air is viable)
+    arguments: <radius>
+    minimum-arity: 1
+  islitradial:
+      description: Search in the given radius for any light sources, printing their coordindates
+      arguments: <radius>
+      minimum-arity: 1
+
+  toblockrange:
+    description: Convert all of the manufactured light in the given range into the block held in your hand. Use /infinitechests wand to receive a range wand
+    usage: Hold a block (air is viable)
+    arguments: <range>
+    minimum-arity: 1
+  tolightrange:
+    description: Find, in the given range, all of the blocks matching the item in your hand and convert each into light. Use /infinitechests wand to receive a range wand
+    usage: Hold a block (air is viable)
+    arguments: <range>
+    minimum-arity: 1
+  islitrange:
+    description: Search the given range for any light sources, printing their coordindates. Use /infinitechests wand to receive a range wand
+    arguments: <range>
+    minimum-arity: 1
